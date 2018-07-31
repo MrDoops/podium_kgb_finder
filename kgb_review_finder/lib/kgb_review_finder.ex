@@ -3,7 +3,7 @@ defmodule KgbReviewFinder do
   Use to find extra suspicious KGB Reviews on http://www.dealerrater.com/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-review-23685/
   """
   alias DealerScraper
-  alias KgbReviewFinder.SuspicionEvaluator
+  alias KgbReviewFinder.ComradeCounter
 
   @doc """
   Prints the top 3 overly positive reviews in the console.
@@ -13,11 +13,11 @@ defmodule KgbReviewFinder do
       reviews
       |> Enum.map(
         &Task.async(fn ->
-          SuspicionEvaluator.score_for_positivity(&1)
+          ComradeCounter.analyze_sentiment(&1)
         end)
       )
       |> Enum.map(&Task.await/1)
-      |> sort_by_rating()
+      |> Enum.sort()
       |> List.pop_at(0..2)
     else
       {:error, _} ->

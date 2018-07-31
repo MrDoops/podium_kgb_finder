@@ -22,7 +22,7 @@ defmodule KgbReviewFinder.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:google_language_client, git: "https://github.com/MrDoops/google_language_client.git"},
+      # {:google_language_client, path: "../google_language_client"},
       {:dealer_scraper, path: "../dealer_scraper"},
     ]
   end

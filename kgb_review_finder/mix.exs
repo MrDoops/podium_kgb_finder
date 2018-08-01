@@ -24,6 +24,7 @@ defmodule KgbReviewFinder.MixProject do
     [
       # {:google_language_client, path: "../google_language_client"},
       {:dealer_scraper, path: "../dealer_scraper"},
+      {:veritaserum, git: "https://github.com/MrDoops/veritaserum.git"},
     ]
   end
 end

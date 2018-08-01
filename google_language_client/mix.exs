@@ -23,7 +23,7 @@ defmodule GoogleLanguageClient.MixProject do
   defp deps do
     [
       {:google_api_language, "~> 0.1.0"},
-      {:goth, "~> 0.6.0"}
+      {:goth, "~> 0.6.0", override: true},
     ]
   end
 end

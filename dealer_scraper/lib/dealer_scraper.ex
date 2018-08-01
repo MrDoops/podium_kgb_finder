@@ -7,6 +7,9 @@ defmodule DealerScraper do
   @dealer_url "https://www.dealerrater.com/dealer"
   @suspicious_dealer_slug "McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685"
 
+  @doc """
+  Returns a list of reviews from the McKaig Chevrolet-Buick DealerRater.com page.
+  """
   def fetch_mckaig_review_data(pages), do:
     fetch_dealer_review_data(pages, @suspicious_dealer_slug)
 
@@ -14,17 +17,19 @@ defmodule DealerScraper do
   Returns a list of maps with review data.
   """
   def fetch_dealer_review_data(pages, dealer_slug) when is_integer(pages) do
-    1..pages
-    |> Enum.map(
-      &Task.async(fn ->
-        fetch_reviews("#{@dealer_url}/#{dealer_slug}/page#{&1}")
-      end)
-    )
-    |> Enum.map(&Task.await/1)
-    |> List.flatten()
+    reviews =
+      1..pages
+      |> Enum.map(
+        &Task.async(fn ->
+          fetch_reviews("#{@dealer_url}/#{dealer_slug}/page#{&1}")
+        end)
+      )
+      |> Enum.map(&Task.await/1)
+      |> List.flatten()
+
+    {:ok, reviews}
   end
 
-  # Fetches a list of maps containing data on each review for a page.
   defp fetch_reviews(url) do
     case fetch_html(url) do
       {:ok, html} ->
